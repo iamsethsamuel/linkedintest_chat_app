@@ -2,15 +2,16 @@ import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { AppBar, Box, Container, FormGroup, IconButton, OutlinedInput, Toolbar, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
-import { useStyles } from "./utils/styles";
+import { useStyles } from "../utils/styles";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import ChatBubbles from "./ChatBubbles";
-import useDatabase from "./hooks/db";
+import useDatabase from "../hooks/db";
+import { StoreType } from "../utils/types";
 
 export default function Chat() {
-    const user = useSelector((state: any) => state.user.name),
+    const user = useSelector((state: StoreType) => state.user.name),
         [message, setMessage] = useState(""),
-        bubble = useSelector((state: any) => state.chat),
+        bubble = useSelector((state: StoreType) => state.chat.chatBubble),
         [color, setColor] = useState(""),
         { addToDB } = useDatabase(),
         { classes } = useStyles();
@@ -25,7 +26,7 @@ export default function Chat() {
     };
 
     const handleSend = () => {
-        const bubbleElem = document.getElementById(bubble.chatBubble);
+        const bubbleElem = document.getElementById(bubble);
         //@ts-ignore
         bubbleElem?.scrollBy({ top: bubbleElem.scrollHeight });
         if (bubbleElem?.children && bubbleElem?.children.length > 0) {
@@ -52,7 +53,7 @@ export default function Chat() {
                     <Typography sx={{ flexGrow: 1 }} className="cap-text">
                         Chat App
                     </Typography>
-                    <Typography>{user}</Typography>
+                    <Typography data-test-id="username">{user}</Typography>
                 </Toolbar>
             </AppBar>
             <div>
@@ -61,12 +62,13 @@ export default function Chat() {
             <Container sx={{ zIndex: 1000, mb: 1 }} className={classes.fixBottom}>
                 <FormGroup>
                     <OutlinedInput
+                        data-test-id="message"
                         onKeyUpCapture={handleKeyPress}
                         value={message}
                         onChange={handleMessageChange}
                         placeholder="Start Typing message"
                         endAdornment={
-                            <IconButton onClick={handleSend}>
+                            <IconButton data-test-id="send" onClick={handleSend}>
                                 <FontAwesomeIcon color={color} icon={faPaperPlane} />
                             </IconButton>
                         }

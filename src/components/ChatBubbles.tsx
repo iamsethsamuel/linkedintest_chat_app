@@ -1,16 +1,17 @@
 import { useEffect, useRef, } from "react";
 import { Avatar, Box, Icon, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useStyles } from "./utils/styles";
+import { useStyles } from "../utils/styles";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { setChatBubble } from "./features/chat/chatSlice";
+import { setChatBubble } from "../features/chat/chatSlice";
+import { ChatsType, StoreType } from "../utils/types";
 
 export default function ChatBubbles() {
     const ref = useRef<HTMLDivElement>(),
         dispatch = useDispatch(),
-        chats = useSelector((state: any) => state.db.chats),
+        chats = useSelector((state: StoreType) => state.db.chats),
         { classes } = useStyles();
 
     useEffect(() => {
@@ -25,25 +26,19 @@ export default function ChatBubbles() {
             id="chats"
             ref={ref}
             sx={{ mb: 10, mt: 10, zIndex: -1, p: 1, overflowX: "hidden" }}
-            className={clsx(classes.absoluteBottom, classes.flexColumn, classes.fullScreen)}>
-            {chats.map((chat: ChatType, index:number) => (
+            className={clsx(classes.absoluteBottom, classes.flexColumn, classes.fullScreen, "chat_bubbles")}>
+            {chats.map((chat: ChatsType, index:number) => (
                 <ChatBubble key={chat.key+index} chat={chat} />
             ))}
         </Box>
     );
 }
 
-interface ChatType {
-    user: string;
-    message: string;
-    date: string;
-    key: number;
-}
 
-const ChatBubble = (props: { chat: ChatType }) => {
+const ChatBubble = (props: { chat: ChatsType }) => {
     const chat = props.chat,
         { classes } = useStyles(),
-        user = useSelector((state: any) => state.user.name);
+        user = useSelector((state: StoreType) => state.user.name);
 
     return (
         <div className={user === chat.user ? classes.alignRight : classes.alignLeft}>

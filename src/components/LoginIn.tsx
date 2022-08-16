@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
-import { useStyles } from "./utils/styles";
+import { useStyles } from "../utils/styles";
 import clsx from "clsx";
 import { Button,  OutlinedInput, Typography } from "@mui/material";
-import { login } from "./features/chat/userSlice";
+import { login } from "../features/chat/userSlice";
 import { useDispatch } from "react-redux";
 
 export default function Login() {
@@ -26,6 +26,7 @@ export default function Login() {
                 <form onSubmit={handleSubmit} className={classes.flexCenter}>
                     <Typography  className={clsx("cap-text", "text-white",)} sx={{mb: 5, textAlign:"center"}}><strong>You are welcome.</strong> <br /> Please enter your name to continue</Typography>
                     <OutlinedInput
+                    data-test-id="name"
                      fullWidth
                         className="white-placeholder"
                         value={name}
@@ -33,7 +34,7 @@ export default function Login() {
                         name="name"
                         placeholder="Enter your name to continue"
                     />
-                    <Button fullWidth sx={{ mt: 2 }} type="submit" variant="outlined">
+                    <Button data-test-id="submit" fullWidth sx={{ mt: 2 }} type="submit" variant="outlined">
                         Submit
                     </Button>
                 </form>

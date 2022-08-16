@@ -1,10 +1,11 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addChat, getChats, loadMore } from "../features/chat/dbSlice";
+import { StoreType } from "../utils/types";
 
 export default function useDatabase() {
     const [db, setDB] = useState(),
-        bubble = useSelector((state: any) => state.chat),
+        bubble = useSelector((state: StoreType) => state.chat),
         [items, setItems] = useState<IDBCursor>(),
         [page, setPage] = useState(1),
         dispatch = useDispatch();
@@ -89,17 +90,22 @@ export default function useDatabase() {
     const getMoreItems = () => {
         const _items = [],
             _page = page * 25 - 25;
-        setPage(page+1)
-        for (let i = _page; i <= _page * page; i++) {
-            //@ts-ignore
-            if (!items![i]) {
-                break;
-            }
-            //@ts-ignore
-            _items.push(items[i]);
-        }
+        if(_page > 0){
+        setPage(page + 1);
 
-        dispatch(loadMore(_items));
+            for (let i = _page; i <= _page * page; i++) {
+                //@ts-ignore
+                if (!items![i]) {
+                    break;
+                }
+                //@ts-ignore
+                _items.push(items[i]);
+            }
+            if (_items.length > 0) {
+                dispatch(loadMore(_items));
+            }
+        }
+        
     };
 
     useEffect(() => {
@@ -117,7 +123,6 @@ export default function useDatabase() {
                     prevPos = bubbleElem!.scrollTop;
                     const scrollPosition = (bubbleElem!.scrollTop / bubbleElem!.scrollHeight) * 100;
                     if (scrollPosition <= 30 && scrollPosition > 25) {
-                        console.log("At Top");
                         getMoreItems();
                         prevPos = bubbleElem!.scrollTop;
                     }

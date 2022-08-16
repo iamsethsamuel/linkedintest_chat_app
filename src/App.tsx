@@ -2,15 +2,16 @@ import React from "react";
 import "./App.css";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
-import Chat from "./Chat";
-import Login from "./LoginIn";
-import {  useSelector } from "react-redux";
+import Chat from "./components/Chat";
+import Login from "./components/LoginIn";
+import { useSelector } from "react-redux";
+import { StoreType } from "./utils/types";
 
 function App() {
     const theme = createTheme(),
-        user = useSelector((state: any) => state.user.name);
+        user = useSelector((state: StoreType) => state.user.name);
 
-    return (
+        return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             {user ? <Chat /> : <Login />}
