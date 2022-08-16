@@ -14,6 +14,43 @@ export const useStyles = makeStyles()((theme) => ({
         height: "100vh",
         display: "flex",
         justifyContent: "center",
-        width: "100vw"
+        width: "100vw",
+        maxHeight: "100vh",
+        overflow: "scroll"
+    },
+
+    fixBottom: {
+        position: "fixed",
+        bottom: 0,
+        width: "100vw",
+    },
+
+    absoluteBottom: {
+        position: "absolute",
+        bottom: 0
+    },
+    chatBubble: {
+        zIndex: -1,
+        borderRadius: 20,
+        width: "fit-content",
+        color: "white",
+    },
+    flexColumn: {
+        display: "flex",
+        flexDirection: "column",
+        overflow: "auto"
+    },
+    alignLeft: {
+        width: "100vw",
+        display: "flex",
+        justifyContent: "left",
+        paddingLeft: "10px"
+
+    },
+    alignRight: {
+        width: "100vw",
+        display: "flex",
+        justifyContent: "right",
+        paddingRight: "2em"
     }
 }));

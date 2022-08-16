@@ -1,10 +1,9 @@
-import React, { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
-import { Container as div } from "@mui/system";
 import { useStyles } from "./utils/styles";
 import clsx from "clsx";
-import { Button, FormGroup, OutlinedInput, Typography } from "@mui/material";
-import { login } from "./features/chat/chatSlice";
+import { Button,  OutlinedInput, Typography } from "@mui/material";
+import { login } from "./features/chat/userSlice";
 import { useDispatch } from "react-redux";
 
 export default function Login() {
@@ -20,6 +19,7 @@ export default function Login() {
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value);
     };
+    
     return (
         <div className={clsx("dark-background", classes.fullScreen)}>
             <div>

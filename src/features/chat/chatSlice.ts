@@ -1,16 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userSlice = createSlice({
-    name: "user",
-    initialState: { name: "" },
-    reducers: {
-        login: (state, action) => {
-            console.log(action.payload)
-            state.name = action.payload;
-        },
+const chatSlice = createSlice({
+    name: "chat",
+    initialState: {
+        chatBubble: null
     },
-});
+    reducers: {
+        setChatBubble: (state, action)=>{
+            state.chatBubble = action.payload
+        }
+    }
+})
 
-export const { login } = userSlice.actions;
+export const {setChatBubble} = chatSlice.actions
 
-export default userSlice.reducer;
+export default chatSlice.reducer
