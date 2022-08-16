@@ -16,5 +16,4 @@ jobs:
 
         with:
           record: false
-          runTests: false
-          test: yarn test
+          command: yarn test
